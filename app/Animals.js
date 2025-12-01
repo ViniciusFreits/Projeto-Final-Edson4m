@@ -1,42 +1,49 @@
 import { StyleSheet, Text, View, ScrollView, Image, Pressable, Animated } from 'react-native';
 import { useRef } from 'react';
+import leao from '../assets/leao.webp';
+import coruja from '../assets/coruja.webp';
+import tartaruga from '../assets/tartaruga.jpg';
+import golfinho from '../assets/golfinho.jpg';
+import lobo from '../assets/lobo.jpg';
+import arara from '../assets/arara.webp';
+
 
 export default function Animals() {
   const animals = [
     {
       nome: "Leão",
       emoji: "🦁",
-      img: "https://i.imgur.com/Wb1n12g.jpeg",
+      img: leao,
       desc: "Grande felino da África, conhecido como 'Rei da Savana'. Vive em grupos chamados alcateias e possui um rugido que pode ser ouvido a até 8 km."
     },
     {
       nome: "Coruja",
       emoji: "🦉",
-      img: "https://i.imgur.com/KB8mZyb.jpeg",
+      img: coruja,
       desc: "Ave noturna com visão e audição extremamente aguçadas. Consegue girar a cabeça em até 270° e voa quase sem emitir som."
     },
     {
       nome: "Tartaruga",
       emoji: "🐢",
-      img: "https://i.imgur.com/Q3qQHJk.jpeg",
+      img: tartaruga,
       desc: "Animal antigo que existe desde o tempo dos dinossauros. Algumas espécies podem viver mais de 150 anos."
     },
     {
       nome: "Golfinho",
       emoji: "🐬",
-      img: "https://i.imgur.com/evN7x8V.jpeg",
+      img: golfinho,
       desc: "Mamífero marinho extremamente inteligente e sociável. Usa sons complexos para se comunicar e dorme com metade do cérebro de cada vez."
     },
     {
       nome: "Lobo",
       emoji: "🐺",
-      img: "https://i.imgur.com/u1G7d4x.jpeg",
+      img: lobo,
       desc: "Caçador habilidoso que vive em matilhas organizadas. Possui mais de 10 tipos de uivo, cada um com um significado diferente."
     },
     {
       nome: "Arara",
       emoji: "🦜",
-      img: "https://i.imgur.com/QXqVJ4W.jpeg",
+      img: arara,
       desc: "Ave brasileira muito colorida e inteligente. Vive em bandos e pode chegar a 80 anos de idade."
     }
   ];
@@ -70,7 +77,8 @@ function AnimalCard({ animal }) {
     <Pressable onPressIn={pressIn} onPressOut={pressOut}>
       <Animated.View style={[styles.card, { transform: [{ scale }] }]}>
         
-        <Image source={{ uri: animal.img }} style={styles.image} />
+        <Image source={typeof animal.img === 'string' ? { uri: animal.img } : animal.img} style={styles.image} />
+
 
         <View style={styles.cardHeader}>
           <Text style={styles.icon}>🍃</Text>

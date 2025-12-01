@@ -1,36 +1,43 @@
 import { StyleSheet, Text, View, ScrollView, Image, Pressable, Animated } from 'react-native';
 import { useRef } from 'react';
+import amazonia from '../assets/amazonia.jpg';
+import cerrado from '../assets/cerrado.jpg';
+import mataatlantica from '../assets/mata_atlantica.jpg';
+import caatinga from '../assets/caatinga.jpg';
+import pampa from '../assets/pampa.jpg';
+import pantanal from '../assets/pantanal.webp';
+
 
 export default function Biomas() {
   const biomas = [
     {
       nome: "Amazônia",
-      img: "https://i.imgur.com/2h2Ztqf.jpeg",
+      img: amazonia,
       desc: "Maior floresta tropical do mundo, com clima quente e úmido e altíssima biodiversidade."
     },
     {
       nome: "Cerrado",
-      img: "https://i.imgur.com/bCBxRbg.jpeg",
+      img: cerrado,
       desc: "Segundo maior bioma do Brasil. Árvores retorcidas, clima seco e fauna resistente."
     },
     {
       nome: "Mata Atlântica",
-      img: "https://i.imgur.com/1C9dVUT.jpeg",
+      img: mataatlantica,
       desc: "Bioma litorâneo úmido, extremamente rico em espécies, porém muito ameaçado."
     },
     {
       nome: "Caatinga",
-      img: "https://i.imgur.com/whRwYCo.jpeg",
+      img: caatinga,
       desc: "Bioma exclusivo do Brasil, clima semiárido, vegetação adaptada à seca extrema."
     },
     {
       nome: "Pampa",
-      img: "https://i.imgur.com/IXE8xqF.jpeg",
+      img: pampa,
       desc: "Campos sulistas amplos, vegetação baixa, clima frio e fauna típica do sul."
     },
     {
       nome: "Pantanal",
-      img: "https://i.imgur.com/QyeOZlO.jpeg",
+      img: pantanal,
       desc: "Maior área alagável do planeta. Riquíssimo em aves, peixes e mamíferos."
     }
   ];
@@ -63,7 +70,9 @@ function BiomaCard({ bioma }) {
   return (
     <Pressable onPressIn={pressIn} onPressOut={pressOut}>
       <Animated.View style={[styles.card, { transform: [{ scale }] }]}>
-        <Image source={{ uri: bioma.img }} style={styles.image} />
+
+           <Image source={typeof bioma.img === 'string' ? { uri: bioma.img } : bioma.img} style={styles.image} />
+        
 
         <View style={styles.cardHeader}>
           <Text style={styles.icon}>🍃</Text>

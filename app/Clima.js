@@ -1,4 +1,4 @@
-import React from "react";
+
 import {
   StyleSheet,
   Text,
@@ -8,7 +8,12 @@ import {
   Platform,
   SafeAreaView,
 } from "react-native";
-
+import global from "../assets/global.jpg";
+import estufa from "../assets/estufa.jpg";
+import ar from "../assets/ar.jpg";
+import tronco from "../assets/tronco.jpg";
+import crise from "../assets/crise.jpg";
+import energia from "../assets/energia.webp";
 export default function Climate() {
   return (
     <SafeAreaView style={styles.safe}>
@@ -26,7 +31,7 @@ export default function Climate() {
         {/* 🔥 EFEITO ESTUFA */}
         <View style={styles.card}>
           <Image
-            source={{ uri: "https://i.imgur.com/fGUHJhP.jpeg" }}
+            source={estufa}
             style={styles.image}
           />
           <Text style={styles.cardTitle}>🔥 Efeito Estufa</Text>
@@ -35,8 +40,8 @@ export default function Climate() {
             Porém, o excesso de gases como CO₂ intensifica o calor e desequilibra
             o clima global.
             {"\n\n"}
-            • 🌡️ Consequência: aquecimento global  
-            • 🌿 Causa principal: queima de combustíveis fósseis  
+            • 🌡️ Consequência: aquecimento global
+            • 🌿 Causa principal: queima de combustíveis fósseis
             • 🚗 Solução: transporte sustentável e energias limpas
           </Text>
         </View>
@@ -44,7 +49,7 @@ export default function Climate() {
         {/* 🌡️ AQUECIMENTO GLOBAL */}
         <View style={styles.card}>
           <Image
-            source={{ uri: "https://i.imgur.com/vnT308d.jpeg" }}
+            source={global}
             style={styles.image}
           />
           <Text style={styles.cardTitle}>🌡️ Aquecimento Global</Text>
@@ -52,9 +57,9 @@ export default function Climate() {
             O aquecimento global é o aumento da temperatura média do planeta,
             causado pelo excesso de gases poluentes.
             {"\n\n"}
-            • 🧊 Derretimento de geleiras  
-            • 🔥 Aumento de ondas de calor  
-            • 🌊 Elevação do nível do mar  
+            • 🧊 Derretimento de geleiras
+            • 🔥 Aumento de ondas de calor
+            • 🌊 Elevação do nível do mar
             {"\n"}
             Solução: reduzir emissões e proteger áreas verdes.
           </Text>
@@ -63,7 +68,7 @@ export default function Climate() {
         {/* 💨 POLUIÇÃO DO AR */}
         <View style={styles.card}>
           <Image
-            source={{ uri: "https://i.imgur.com/hacno2c.jpeg" }}
+            source={ar}
             style={styles.image}
           />
           <Text style={styles.cardTitle}>💨 Poluição do Ar</Text>
@@ -71,9 +76,9 @@ export default function Climate() {
             A poluição atmosférica vem de fábricas, carros, queimadas e
             processos químicos.
             {"\n\n"}
-            • 🫁 Afeta a saúde humana  
-            • 🌫️ Reduz visibilidade e qualidade do ar  
-            • 🌱 Prejudica plantas e animais  
+            • 🫁 Afeta a saúde humana
+            • 🌫️ Reduz visibilidade e qualidade do ar
+            • 🌱 Prejudica plantas e animais
             {"\n"}
             Solução: transporte público, energia limpa e reflorestamento.
           </Text>
@@ -82,7 +87,7 @@ export default function Climate() {
         {/* 🌳 DESMATAMENTO */}
         <View style={styles.card}>
           <Image
-            source={{ uri: "https://i.imgur.com/Zgp3FTt.jpeg" }}
+            source={tronco}
             style={styles.image}
           />
           <Text style={styles.cardTitle}>🌳 Desmatamento</Text>
@@ -90,9 +95,9 @@ export default function Climate() {
             A remoção de florestas prejudica o clima, diminui a água dos rios e
             reduz a vida animal.
             {"\n\n"}
-            • 🐾 Extinção de espécies  
-            • 🚱 Solo seco e sem nutrientes  
-            • 🌬️ Menos oxigênio na atmosfera  
+            • 🐾 Extinção de espécies
+            • 🚱 Solo seco e sem nutrientes
+            • 🌬️ Menos oxigênio na atmosfera
             {"\n"}
             Solução: reflorestamento e proteção ambiental.
           </Text>
@@ -101,7 +106,7 @@ export default function Climate() {
         {/* 💧 CRISE HÍDRICA */}
         <View style={styles.card}>
           <Image
-            source={{ uri: "https://i.imgur.com/VLKgPoR.jpeg" }}
+            source={crise}
             style={styles.image}
           />
           <Text style={styles.cardTitle}>💧 Crise Hídrica</Text>
@@ -109,9 +114,9 @@ export default function Climate() {
             A falta de água potável é causada por poluição, desmatamento e
             mudanças climáticas.
             {"\n\n"}
-            • 🚰 Racionamento em cidades  
-            • 🏭 Poluição de rios  
-            • 🔥 Aumento de queimadas  
+            • 🚰 Racionamento em cidades
+            • 🏭 Poluição de rios
+            • 🔥 Aumento de queimadas
             {"\n"}
             Solução: preservar nascentes e usar água de forma consciente.
           </Text>
@@ -120,16 +125,16 @@ export default function Climate() {
         {/* ⚡ ENERGIAS RENOVÁVEIS */}
         <View style={styles.card}>
           <Image
-            source={{ uri: "https://i.imgur.com/7sXbj3l.jpeg" }}
+            source={energia}
             style={styles.image}
           />
           <Text style={styles.cardTitle}>⚡ Energias Renováveis</Text>
           <Text style={styles.text}>
             As energias renováveis reduzem impactos ambientais e emissões.
             {"\n\n"}
-            • ☀️ Solar  
-            • 💨 Eólica  
-            • 🌊 Hidrelétrica  
+            • ☀️ Solar
+            • 💨 Eólica
+            • 🌊 Hidrelétrica
             {"\n"}
             Solução: incentivar uso de fontes limpas e sustentáveis.
           </Text>
