@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Image, Pressable, Animated } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Pressable, Animated, Platform } from 'react-native';
 import { useRef } from 'react';
 import amazonia from '../assets/amazonia.jpg';
 import cerrado from '../assets/cerrado.jpg';
@@ -7,6 +7,7 @@ import caatinga from '../assets/caatinga.jpg';
 import pampa from '../assets/pampa.jpg';
 import pantanal from '../assets/pantanal.webp';
 
+const isWeb = Platform.OS === "web";
 
 export default function Biomas() {
   const biomas = [
@@ -43,7 +44,13 @@ export default function Biomas() {
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isWeb && {
+      paddingTop: 90,
+      maxWidth: 1400,
+      width: "100%",
+      alignSelf: "center",
+      paddingHorizontal: 40
+    }]}>
       <Text style={styles.title}>🌿 Biomas do Brasil</Text>
       <Text style={styles.subtitle}>Explore a natureza de forma realista</Text>
 
@@ -69,10 +76,16 @@ function BiomaCard({ bioma }) {
 
   return (
     <Pressable onPressIn={pressIn} onPressOut={pressOut}>
-      <Animated.View style={[styles.card, { transform: [{ scale }] }]}>
+      <Animated.View style={[
+        styles.card,
+        isWeb && { maxWidth: 800, alignSelf: "center", width: "100%" },
+        { transform: [{ scale }] }
+      ]}>
 
-           <Image source={typeof bioma.img === 'string' ? { uri: bioma.img } : bioma.img} style={styles.image} />
-        
+        <Image
+          source={typeof bioma.img === 'string' ? { uri: bioma.img } : bioma.img}
+          style={styles.image}
+        />
 
         <View style={styles.cardHeader}>
           <Text style={styles.icon}>🍃</Text>
@@ -91,13 +104,6 @@ const styles = StyleSheet.create({
     paddingTop: 55,
     paddingHorizontal: 20,
     backgroundColor: '#0f3d1f',
-  },
-
-  // Fundo gradiente manual com overlay
-  gradient: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
   },
 
   title: {
@@ -125,14 +131,13 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     padding: 18,
     marginBottom: 25,
+    borderWidth: 1,
+    borderColor: '#d6e8d8',
 
     shadowColor: '#000',
     shadowOpacity: 0.18,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 3 },
-
-    borderWidth: 1,
-    borderColor: '#d6e8d8',
   },
 
   image: {

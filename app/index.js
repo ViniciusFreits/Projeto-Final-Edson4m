@@ -13,9 +13,12 @@ import { StatusBar } from "expo-status-bar";
 export default function App() {
   return (
     <SafeAreaView style={styles.safe}>
-      {/* RN StatusBar para ajustar background no Android se quiser */}
       <RNStatusBar barStyle="dark-content" backgroundColor="#e8f0ec" />
-      <ScrollView contentContainerStyle={styles.container}>
+
+      <ScrollView
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.hero}>
           <Text style={styles.title}>Explore o Meio Ambiente</Text>
 
@@ -54,13 +57,27 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: "#e8f0ec",
+    ...Platform.select({
+      web: {
+        paddingTop: 25, // 🔥 evita o bug do scroll no topo
+      },
+    }),
   },
 
   container: {
     flexGrow: 1,
     paddingHorizontal: 28,
-    paddingVertical: 36,
+    paddingVertical: Platform.select({
+      web: 50, // 🔥 web fica mais espaçado
+      default: 36,
+    }),
     justifyContent: "center",
+    maxWidth: Platform.select({
+      web: 900, // 🔥 limita a largura para ficar bonito igual site
+      default: "100%",
+    }),
+    width: "100%",
+    alignSelf: "center",
   },
 
   hero: {
@@ -68,10 +85,12 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 32,
+    fontSize: Platform.select({
+      web: 40, // 🔥 maior no web pra parecer site
+      default: 32,
+    }),
     fontWeight: "800",
     color: "#1b4332",
-    textAlign: "left",
     marginBottom: 10,
   },
 
@@ -79,6 +98,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#3a5a40",
     lineHeight: 22,
+    maxWidth: Platform.select({
+      web: 700, // 🔥 largura fixa pro texto ficar bonito no PC
+      default: "100%",
+    }),
   },
 
   card: {
@@ -86,7 +109,7 @@ const styles = StyleSheet.create({
     paddingVertical: 22,
     paddingHorizontal: 20,
     borderRadius: 22,
-    // sombra cross-platform
+
     ...Platform.select({
       ios: {
         shadowColor: "#000",
@@ -97,8 +120,11 @@ const styles = StyleSheet.create({
       android: {
         elevation: 6,
       },
-      default: {
-        elevation: 6,
+      web: {
+        boxShadow: "0px 4px 14px rgba(0,0,0,0.15)", // 🔥 sombra perfeita web
+        maxWidth: 600,
+        width: "100%",
+        alignSelf: "center",
       },
     }),
   },
@@ -118,6 +144,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#1d3a2a",
     fontWeight: "600",
-    flexShrink: 1, // evita overflow em telas pequenas
+    flexShrink: 1,
   },
 });

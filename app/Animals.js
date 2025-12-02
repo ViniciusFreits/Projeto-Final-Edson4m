@@ -50,7 +50,13 @@ export default function Animals() {
   ];
 
   return (
-    <View style={[styles.container, isWeb && { paddingTop: 90, maxWidth: 900, alignSelf: "center" }]}>
+    <View style={[styles.container, isWeb && {
+      paddingTop: 90,
+      maxWidth: 1400,  // Aumentei a largura
+      width: "100%",   // Agora ocupa totalmente a tela
+      alignSelf: "center",
+      paddingHorizontal: 40,
+    }]}>
       <Text style={styles.title}>🐾 Animais do Mundo</Text>
       <Text style={styles.subtitle}>Aprenda sobre espécies, hábitos e curiosidades</Text>
 
