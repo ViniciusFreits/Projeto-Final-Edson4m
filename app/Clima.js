@@ -147,7 +147,7 @@ export default function Climate() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: "#a7d7a9",
+    backgroundColor: "#0f3d1f",
     paddingTop: 38,
   },
 
@@ -158,14 +158,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#0a3d21",
+    color: "#e8ffe8",
     textAlign: "center",
     marginBottom: 6,
   },
 
   subtitle: {
     fontSize: 17,
-    color: "#1f5d35",
+    color: "#c8f5d0",
     textAlign: "center",
     marginBottom: 25,
     lineHeight: 22,

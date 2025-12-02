@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Image, Pressable, Animated } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Pressable, Animated, Platform } from 'react-native';
 import { useRef } from 'react';
 import leao from '../assets/leao.webp';
 import coruja from '../assets/coruja.webp';
@@ -7,6 +7,7 @@ import golfinho from '../assets/golfinho.jpg';
 import lobo from '../assets/lobo.jpg';
 import arara from '../assets/arara.webp';
 
+const isWeb = Platform.OS === "web";
 
 export default function Animals() {
   const animals = [
@@ -49,7 +50,7 @@ export default function Animals() {
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isWeb && { paddingTop: 90, maxWidth: 900, alignSelf: "center" }]}>
       <Text style={styles.title}>🐾 Animais do Mundo</Text>
       <Text style={styles.subtitle}>Aprenda sobre espécies, hábitos e curiosidades</Text>
 
@@ -75,10 +76,12 @@ function AnimalCard({ animal }) {
 
   return (
     <Pressable onPressIn={pressIn} onPressOut={pressOut}>
-      <Animated.View style={[styles.card, { transform: [{ scale }] }]}>
-        
-        <Image source={typeof animal.img === 'string' ? { uri: animal.img } : animal.img} style={styles.image} />
+      <Animated.View style={[styles.card, isWeb && { maxWidth: 600, alignSelf: "center" }, { transform: [{ scale }] }]}>
 
+        <Image
+          source={typeof animal.img === 'string' ? { uri: animal.img } : animal.img}
+          style={styles.image}
+        />
 
         <View style={styles.cardHeader}>
           <Text style={styles.icon}>🍃</Text>

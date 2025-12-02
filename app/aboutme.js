@@ -1,106 +1,182 @@
 import { useRef, useEffect } from 'react';
-import { StyleSheet, Image, Pressable, Animated, ScrollView, Text, View } from 'react-native';
+import { StyleSheet, Platform, Animated, ScrollView, Text, Image } from 'react-native';
 import foto from '../assets/foto.jpg';
 
+const isWeb = Platform.OS === "web";
+
 export default function AboutMe() {
-  const fadeAnim = useRef(new Animated.Value(0)).current; // fade-in
-  const scaleAnim = useRef(new Animated.Value(0.9)).current; // zoom-in
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const imgAnim = useRef(new Animated.Value(0)).current;
+  const nameAnim = useRef(new Animated.Value(0)).current;
+  const roleAnim = useRef(new Animated.Value(0)).current;
+  const descAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
+    Animated.stagger(200, [
+      Animated.timing(imgAnim, {
         toValue: 1,
-        duration: 800,
+        duration: 600,
         useNativeDriver: true,
       }),
-      Animated.spring(scaleAnim, {
+      Animated.timing(nameAnim, {
         toValue: 1,
-        friction: 5,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(roleAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(descAnim, {
+        toValue: 1,
+        duration: 700,
         useNativeDriver: true,
       }),
     ]).start();
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
-      <Animated.View
-        style={[
-          styles.profileContainer,
-          { opacity: fadeAnim, transform: [{ scale: scaleAnim }] },
-        ]}
-      >
-        <Image source={foto} style={styles.image} />
+    <Animated.ScrollView
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: 100 }}
+      onScroll={Animated.event(
+        [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+        { useNativeDriver: true }
+      )}
+      scrollEventThrottle={16}
+      decelerationRate="fast"
+      bounces={true}
+      overScrollMode="always"
+    >
+      <Animated.View style={styles.profileContainer}>
+        <Animated.Image
+          source={foto}
+          style={[
+            styles.image,
+            {
+              opacity: imgAnim,
+              transform: [
+                {
+                  scale: imgAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0.8, 1],
+                  }),
+                },
+              ],
+            },
+          ]}
+        />
 
-        <Text style={styles.name}>Olá, eu sou o Edson!!!</Text>
-        <Text style={styles.role}>Desenvolvedor React Native & Agropecuária</Text>
+        <Animated.Text
+          style={[
+            styles.name,
+            {
+              opacity: nameAnim,
+              transform: [
+                {
+                  translateY: nameAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [20, 0],
+                  }),
+                },
+              ],
+            },
+          ]}
+        >
+          Olá, eu sou o Edson!!!
+        </Animated.Text>
 
-        <Text style={styles.description}>
-          Sou apaixonado por criar aplicativos móveis bonitos e funcionais. Tenho experiência em
-          animações, interfaces interativas e design responsivo. Adoro aprender novas tecnologias
-          e compartilhar conhecimento.
-        </Text>
+        <Animated.Text
+          style={[
+            styles.role,
+            {
+              opacity: roleAnim,
+              transform: [
+                {
+                  translateY: roleAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [20, 0],
+                  }),
+                },
+              ],
+            },
+          ]}
+        >
+          Desenvolvedor React Native & Agropecuária
+        </Animated.Text>
 
-        <Pressable style={styles.button}>
-          <Text style={styles.buttonText}>Vamos Conectar!</Text>
-        </Pressable>
+        <Animated.Text
+          style={[
+            styles.description,
+            {
+              opacity: descAnim,
+              transform: [
+                {
+                  translateY: descAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [20, 0],
+                  }),
+                },
+              ],
+            },
+          ]}
+        >
+          Tenho 17 anos e sou apaixonado por tecnologia, especialmente
+          desenvolvimento mobile com React Native. Gosto de criar interfaces
+          modernas, animações fluidas e soluções que realmente ajudam as
+          pessoas. Também tenho uma conexão forte com o agro, onde cresci e
+          aprendi a importância do trabalho duro, disciplina e responsabilidade.
+
+          Sou curioso, penso muito sobre a vida e sempre busco evoluir — como
+          pessoa e como desenvolvedor. Estou construindo meu futuro com foco,
+          calma e consistência.
+        </Animated.Text>
       </Animated.View>
-    </ScrollView>
+    </Animated.ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#0f3d1f',
-    paddingTop: 50,
-    paddingHorizontal: 20,
+    backgroundColor: "#0f3d1f",
+    minHeight: isWeb ? "100vh" : "100%",
   },
   profileContainer: {
-    backgroundColor: '#f3fff4',
+    backgroundColor: "#f3fff4",
     borderRadius: 18,
     padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.18,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 3 },
+    marginTop: isWeb ? 80 : 60,
+    marginHorizontal: 20,
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#d6e8d8',
+    borderColor: "#d6e8d8",
   },
   image: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
+    width: isWeb ? 180 : 140,
+    height: isWeb ? 180 : 140,
+    borderRadius: isWeb ? 90 : 70,
     marginBottom: 16,
   },
   name: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#1d502d',
+    fontSize: isWeb ? 28 : 24,
+    fontWeight: "700",
+    color: "#1d502d",
     marginBottom: 4,
   },
   role: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#315c3a',
+    fontSize: isWeb ? 20 : 16,
+    fontWeight: "500",
+    color: "#315c3a",
     marginBottom: 12,
   },
   description: {
-    fontSize: 15,
-    color: '#315c3a',
-    textAlign: 'center',
-    lineHeight: 22,
+    fontSize: isWeb ? 17 : 15,
+    color: "#315c3a",
+    textAlign: "center",
+    lineHeight: isWeb ? 26 : 22,
     marginBottom: 20,
-  },
-  button: {
-    backgroundColor: '#1d502d',
-    paddingVertical: 12,
-    paddingHorizontal: 25,
-    borderRadius: 12,
-  },
-  buttonText: {
-    color: '#f3fff4',
-    fontWeight: '700',
-    fontSize: 16,
+    maxWidth: isWeb ? 600 : "100%",
   },
 });
