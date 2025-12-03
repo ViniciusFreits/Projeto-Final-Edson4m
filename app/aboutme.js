@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { StyleSheet, Platform, Animated, ScrollView, Text, Image } from 'react-native';
+import { StyleSheet, Platform, Animated } from 'react-native';
 import foto from '../assets/foto.jpg';
 
 const isWeb = Platform.OS === "web";
@@ -85,7 +85,7 @@ export default function AboutMe() {
             },
           ]}
         >
-          Olá, eu sou o Edson!!!
+          Olá, eu sou o Edson!!
         </Animated.Text>
 
         <Animated.Text
@@ -104,7 +104,7 @@ export default function AboutMe() {
             },
           ]}
         >
-          Desenvolvedor React Native & Agropecuária
+          Desenvolvedor & Agropecuária
         </Animated.Text>
 
         <Animated.Text

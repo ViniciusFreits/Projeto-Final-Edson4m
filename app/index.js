@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { StatusBar as RNStatusBar } from "react-native";
 import {
   SafeAreaView,
@@ -7,10 +7,77 @@ import {
   View,
   ScrollView,
   Platform,
+  Animated,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 export default function App() {
+  // ANIMAÇÕES
+  const titleAnim = useRef(new Animated.Value(40)).current;  // Posição inicial (fora da tela)
+  const subtitleAnim = useRef(new Animated.Value(40)).current;
+  const cardAnim = useRef(new Animated.Value(60)).current;
+
+  // Opacidade das animações
+  const titleOpacity = useRef(new Animated.Value(0)).current;  // Inicialmente invisível
+  const subtitleOpacity = useRef(new Animated.Value(0)).current;
+  const item1Opacity = useRef(new Animated.Value(0)).current;
+  const item2Opacity = useRef(new Animated.Value(0)).current;
+  const item3Opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    // Timeline das animações
+    Animated.stagger(120, [
+      // Título com animação de posição e opacidade
+      Animated.timing(titleAnim, {
+        toValue: 0,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.timing(titleOpacity, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+
+      // Subtítulo com animação de posição e opacidade
+      Animated.timing(subtitleAnim, {
+        toValue: 0,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.timing(subtitleOpacity, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+
+      // Card principal (aparece de baixo para cima)
+      Animated.timing(cardAnim, {
+        toValue: 0,
+        duration: 700,
+        useNativeDriver: true,
+      }),
+
+      // Animação dos itens com opacidade (depois que o card aparece)
+      Animated.timing(item1Opacity, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.timing(item2Opacity, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.timing(item3Opacity, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+
+    ]).start();
+  }, []);
+
   return (
     <SafeAreaView style={styles.safe}>
       <RNStatusBar barStyle="dark-content" backgroundColor="#e8f0ec" />
@@ -19,33 +86,40 @@ export default function App() {
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.hero}>
+        {/* TÍTULO ANIMADO */}
+        <Animated.View style={{ transform: [{ translateY: titleAnim }], opacity: titleOpacity }}>
           <Text style={styles.title}>Explore o Meio Ambiente</Text>
+        </Animated.View>
 
+        {/* SUBTÍTULO ANIMADO */}
+        <Animated.View style={{ transform: [{ translateY: subtitleAnim }], opacity: subtitleOpacity }}>
           <Text style={styles.subtitle}>
-            Descubra fauna, biomas e práticas sustentáveis de um jeito simples
-            e visual.
+            Descubra fauna, biomas e práticas sustentáveis de um jeito simples e visual.
           </Text>
-        </View>
+        </Animated.View>
 
-        <View style={styles.card}>
-          <View style={styles.item}>
+        {/* CARD PRINCIPAL ANIMADO */}
+        <Animated.View style={[styles.card, { transform: [{ translateY: cardAnim }] }]}>
+          
+          {/* ITEM 1 */}
+          <Animated.View style={[styles.item, { opacity: item1Opacity, transform: [{ translateY: item1Opacity }] }]}>
             <Text style={styles.icon}>🐾</Text>
             <Text style={styles.itemText}>Fauna — espécies e curiosidades</Text>
-          </View>
+          </Animated.View>
 
-          <View style={styles.item}>
+          {/* ITEM 2 */}
+          <Animated.View style={[styles.item, { opacity: item2Opacity, transform: [{ translateY: item2Opacity }] }]}>
             <Text style={styles.icon}>🌳</Text>
             <Text style={styles.itemText}>Biomas — clima e vegetação</Text>
-          </View>
+          </Animated.View>
 
-          <View style={styles.item}>
+          {/* ITEM 3 */}
+          <Animated.View style={[styles.item, styles.lastItem, { opacity: item3Opacity, transform: [{ translateY: item3Opacity }] }]}>
             <Text style={styles.icon}>🌱</Text>
-            <Text style={styles.itemText}>
-              Sustentabilidade — ações do dia a dia
-            </Text>
-          </View>
-        </View>
+            <Text style={styles.itemText}>Sustentabilidade — ações do dia a dia</Text>
+          </Animated.View>
+
+        </Animated.View>
 
         <StatusBar style="dark" />
       </ScrollView>
@@ -58,9 +132,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#e8f0ec",
     ...Platform.select({
-      web: {
-        paddingTop: 25, // 🔥 evita o bug do scroll no topo
-      },
+      web: { paddingTop: 25 },
     }),
   },
 
@@ -68,60 +140,54 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 28,
     paddingVertical: Platform.select({
-      web: 50, // 🔥 web fica mais espaçado
-      default: 36,
+      web: 60,
+      default: 40,
     }),
     justifyContent: "center",
     maxWidth: Platform.select({
-      web: 900, // 🔥 limita a largura para ficar bonito igual site
+      web: 900,
       default: "100%",
     }),
     width: "100%",
     alignSelf: "center",
   },
 
-  hero: {
-    marginBottom: 28,
-  },
-
   title: {
-    fontSize: Platform.select({
-      web: 40, // 🔥 maior no web pra parecer site
-      default: 32,
-    }),
-    fontWeight: "800",
-    color: "#1b4332",
-    marginBottom: 10,
+    fontSize: Platform.select({ web: 44, default: 34 }),
+    fontWeight: "900",
+    color: "#1d3a2a",
+    marginBottom: 12,
+    textAlign: "center",
   },
 
   subtitle: {
-    fontSize: 16,
+    fontSize: Platform.select({ web: 18, default: 17 }),
     color: "#3a5a40",
-    lineHeight: 22,
-    maxWidth: Platform.select({
-      web: 700, // 🔥 largura fixa pro texto ficar bonito no PC
-      default: "100%",
-    }),
+    lineHeight: 26,
+    maxWidth: Platform.select({ web: 700, default: "100%" }),
+    opacity: 0.9,
+    marginBottom: 32,
+    textAlign: "center",
+    alignSelf: "center",
   },
 
   card: {
     backgroundColor: "#ffffff",
-    paddingVertical: 22,
-    paddingHorizontal: 20,
-    borderRadius: 22,
-
+    paddingVertical: 24,
+    paddingHorizontal: 24,
+    borderRadius: 28,
     ...Platform.select({
       ios: {
         shadowColor: "#000",
-        shadowOpacity: 0.12,
-        shadowOffset: { width: 0, height: 6 },
-        shadowRadius: 16,
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 8 },
+        shadowRadius: 20,
       },
       android: {
-        elevation: 6,
+        elevation: 10,
       },
       web: {
-        boxShadow: "0px 4px 14px rgba(0,0,0,0.15)", // 🔥 sombra perfeita web
+        boxShadow: "0px 10px 25px rgba(0,0,0,0.1)",
         maxWidth: 600,
         width: "100%",
         alignSelf: "center",
@@ -132,18 +198,24 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 18,
+    paddingVertical: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f0f0f0",
+  },
+
+  lastItem: {
+    borderBottomWidth: 0,
   },
 
   icon: {
-    fontSize: 26,
-    marginRight: 14,
+    fontSize: 30,
+    marginRight: 16,
   },
 
   itemText: {
-    fontSize: 17,
+    fontSize: 18,
     color: "#1d3a2a",
-    fontWeight: "600",
+    fontWeight: "700",
     flexShrink: 1,
   },
 });
